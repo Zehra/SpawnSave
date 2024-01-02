@@ -27,7 +27,7 @@ class SpawnSave : public bz_Plugin, bz_CustomSlashCommandHandler
         playerPos[playerID][1] = 0.0; // Y
         playerPos[playerID][2] = 0.0; // Z
         playerPos[playerID][3] = 0.0; // Rotation
-        playerSavedSpawn[playerID] = false;
+        playerSavedSpawn[playerID] = 1;
     }
     
 };
@@ -52,7 +52,7 @@ bool SpawnSave::SlashCommand ( int playerID, bz_ApiString command, bz_ApiString 
             playerPos[playerID][1] = pr->lastKnownState.pos[1]; // Y
             playerPos[playerID][2] = pr->lastKnownState.pos[2]; // Z
             playerPos[playerID][3] = pr->lastKnownState.rotation; // Rotation
-            playerSavedSpawn[playerID] = true;
+            playerSavedSpawn[playerID] = 1;
             bz_sendTextMessage(BZ_SERVER, playerID, "New spawn position saved.");
             bz_freePlayerRecord(pr);
         }
@@ -76,7 +76,7 @@ void SpawnSave::Event(bz_EventData *eventData ){
         int player = getSpawnData->playerID;
         //
         if (isInRange(player) == 1) {
-            if (playerSavedSpawn[player] == true) {
+            if (playerSavedSpawn[player] == 1) {
                 getSpawnData->handled = true;
                 getSpawnData->pos[0] = playerPos[player][0];
                 getSpawnData->pos[1] = playerPos[player][1];
